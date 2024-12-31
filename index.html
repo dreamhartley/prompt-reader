@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>转义字符 / PNG 元数据转换</title>
+  <!-- 全局样式 -->
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- pako 用于解压 zTXt (如果遇到 zTXt 压缩数据) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+</head>
+<body>
+  <!-- 标签切换按钮 -->
+  <div class="tab-container">
+    <!-- 将此处设置为“PNG 元数据读取”默认选中 -->
+    <button class="tab-button" data-tab="escapeTab">转义字符转换</button>
+    <button class="tab-button active" data-tab="metaDataTab">PNG 元数据读取</button>
+  </div>
+
+  <!-- 转义字符转换区域，去掉默认 active -->
+  <div id="escapeTab" class="tab-content">
+    <h2>转义字符转换</h2>
+    <textarea id="inputArea" rows="8" placeholder="在此输入包含转义字符的文本"></textarea>
+    <button id="convertButton">转换</button>
+    <div id="outputArea">输出结果将显示在这里</div>
+  </div>
+
+  <!-- PNG 元数据读取区域，默认 active -->
+  <div id="metaDataTab" class="tab-content active">
+    <h2>PNG 元数据读取</h2>
+    <div class="upload-container" id="dropArea">
+      <label for="imageUpload">拖拽图片到这里或者点击选择</label>
+      <input type="file" id="imageUpload" accept="image/png" style="display: none;" />
+      <img id="imagePreview" src="#" alt="预览图片" style="display: none;" />
+    </div>
+
+    <!-- 提示词展示区 -->
+    <div class="prompt-section">
+      <h3 id="prompt-section-title" style="display: none;">提取的提示词信息</h3>
+
+      <!-- 正向提示词框 -->
+      <div class="prompt-box" id="positivePromptBox" style="display: none;">
+        <div class="prompt-text" id="positivePromptText"></div>
+        <div class="copy-icon" id="copyPositiveIcon" title="复制正向提示词">📋</div>
+      </div>
+
+      <!-- 负向提示词框 -->
+      <div class="prompt-box" id="negativePromptBox" style="display: none;">
+        <div class="prompt-text" id="negativePromptText"></div>
+        <div class="copy-icon" id="copyNegativeIcon" title="复制负向提示词">📋</div>
+      </div>
+    </div>
+
+    <!-- 元数据展示区 -->
+    <div class="meta-data-container">
+      <button id="toggleMetaData" style="display: none;">显示完整元数据</button>
+      <div id="metaDataOutput" class="meta-data-content"></div>
+    </div>
+  </div>
+
+  <!-- 加载主脚本 -->
+  <script src="js/main.js"></script>
+</body>
+</html>
