@@ -2,53 +2,27 @@
 * 页面加载后的初始化逻辑
 *******************************************/
 window.onload = () => {
-    // 标签切换逻辑
-    const tabButtons = document.querySelectorAll(".tab-button");
-    const tabContents = document.querySelectorAll(".tab-content");
-    tabButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const tabId = button.getAttribute("data-tab");
-            tabButtons.forEach((btn) => btn.classList.remove("active"));
-            button.classList.add("active");
-            tabContents.forEach((content) => {
-                content.classList.remove("active");
-                if (content.id === tabId) {
-                    content.classList.add("active");
-                }
-            });
-        });
-    });
-
-    // 转义字符转换按钮
-    const convertButton = document.getElementById("convertButton");
-    convertButton.addEventListener("click", convertText);
-
     // 拖拽 & 点击上传
     const dropArea = document.getElementById("dropArea");
     const imageUpload = document.getElementById("imageUpload");
-
     dropArea.addEventListener("dragover", function(event) {
         event.preventDefault();
         dropArea.classList.add("dragover");
     });
-
     dropArea.addEventListener("dragleave", function(event) {
         dropArea.classList.remove("dragover");
         event.preventDefault();
     });
-
     dropArea.addEventListener("drop", function(event) {
         event.preventDefault();
         dropArea.classList.remove("dragover");
         const file = event.dataTransfer.files[0];
         handleFile(file);
     });
-
     imageUpload.addEventListener("change", function(event) {
         const file = event.target.files[0];
         handleFile(file);
     });
-
     // 复制图标事件
     const copyPositiveIcon = document.getElementById("copyPositiveIcon");
     copyPositiveIcon.addEventListener("click", () => {
@@ -57,7 +31,6 @@ window.onload = () => {
             .innerText.replace("正向提示词:\n", "");
         copyToClipboard(text);
     });
-
     const copyNegativeIcon = document.getElementById("copyNegativeIcon");
     copyNegativeIcon.addEventListener("click", () => {
         const text = document
@@ -66,20 +39,6 @@ window.onload = () => {
         copyToClipboard(text);
     });
 };
-
-/*******************************************
-* 转义字符转换逻辑
-*******************************************/
-function convertText() {
-    const input = document.getElementById("inputArea").value;
-    const outputDiv = document.getElementById("outputArea");
-    let convertedText = input
-        .replace(/\\n/g, "\n")
-        .replace(/\\r/g, "\r")
-        .replace(/\\t/g, "\t");
-    outputDiv.innerText = convertedText;
-}
-
 /*******************************************
 * 处理文件：检查文件类型并读取
 *******************************************/
@@ -88,15 +47,12 @@ function handleFile(file) {
     if (!file) {
         return;
     }
-
     // 如果不是 PNG，给出提示并返回，也不清空
     if (!file.type.startsWith("image/png")) {
         alert("请选择 PNG 图片");
         return;
     }
-
     // ======= 能走到这里，说明一定是新选择并且是 PNG 文件，才清空并解析 =======
-
     const metaDataOutput = document.getElementById("metaDataOutput");
     const imagePreview = document.getElementById("imagePreview");
     const uploadPlaceholder = document.getElementById("uploadPlaceholder");
@@ -106,30 +62,25 @@ function handleFile(file) {
     const positivePromptBox = document.getElementById("positivePromptBox");
     const negativePromptBox = document.getElementById("negativePromptBox");
     const toggleMetaDataButton = document.getElementById("toggleMetaData");
-
     // 清空提示区域，准备载入新图片
     metaDataOutput.innerText = "";
     promptSectionTitle.style.display = "none";
     positivePromptBox.style.display = "none";
     negativePromptBox.style.display = "none";
     toggleMetaDataButton.style.display = "none";
-
     // 读文件
     const reader = new FileReader();
     reader.onload = (e) => {
         imagePreview.src = e.target.result;
         imagePreview.style.display = "block";
         uploadPlaceholder.style.display = "none"; // 隐藏占位符
-
         // 显示文本框和元数据区域
         promptSection.style.display = "block";
         metaDataContainer.style.display = "block";
-
         parsePNGMetaData(e.target.result);
     };
     reader.readAsDataURL(file);
 }
-
 /*******************************************
 * 解析 PNG MetaData (与之前版本一致，此处省略注释)
 *******************************************/
@@ -139,14 +90,12 @@ function parsePNGMetaData(dataUrl) {
     const positivePromptBox = document.getElementById("positivePromptBox");
     const negativePromptBox = document.getElementById("negativePromptBox");
     const toggleMetaDataButton = document.getElementById("toggleMetaData");
-
     // 先清空
     metaDataOutput.innerText = "";
     promptSectionTitle.style.display = "none";
     positivePromptBox.style.display = "none";
     negativePromptBox.style.display = "none";
     toggleMetaDataButton.style.display = "none";
-
     // Base64 解码为二进制
     const base64String = dataUrl.split(",")[1];
     const binaryString = atob(base64String);
@@ -154,10 +103,8 @@ function parsePNGMetaData(dataUrl) {
     for (let i = 0; i < binaryString.length; i++) {
         bytes[i] = binaryString.charCodeAt(i);
     }
-
-    let metaDataText = ""; 
+    let metaDataText = "";
     let foundText = false;
-
     // 提取到的提示词
     let comfyPositive = "";
     let comfyNegative = "";
@@ -165,7 +112,6 @@ function parsePNGMetaData(dataUrl) {
     let novelAINegative = "";
     let stablePositive = "";
     let stableNegative = "";
-
     // 遍历 PNG 文件块
     for (let i = 8; i < bytes.length - 8;) {
         const chunkLength =
@@ -179,7 +125,6 @@ function parsePNGMetaData(dataUrl) {
             bytes[i + 6],
             bytes[i + 7]
         );
-
         if (chunkType === "tEXt" || chunkType === "zTXt") {
             let textDataIndex = i + 8;
             let key = "";
@@ -191,7 +136,6 @@ function parsePNGMetaData(dataUrl) {
                 textDataIndex++;
             }
             let text = "";
-
             if (chunkType === "tEXt") {
                 for (let j = textDataIndex + 1; j < i + 8 + chunkLength; j++) {
                     text += String.fromCharCode(bytes[j]);
@@ -210,7 +154,6 @@ function parsePNGMetaData(dataUrl) {
                     }
                 }
             }
-
             // ComfyUI
             if (key === "prompt") {
                 try {
@@ -253,28 +196,23 @@ function parsePNGMetaData(dataUrl) {
                 foundText = true;
             }
         }
-
         i += 12 + chunkLength;
     }
-
     if (!foundText) {
         metaDataOutput.innerText = "未找到 PNG 元数据";
         return;
     }
-
     // Stable Diffusion
     if (!comfyPositive && !comfyNegative && !novelAIPrompt && !novelAINegative) {
         const sdInfo = parseStableDiffusionData(metaDataText);
         stablePositive = sdInfo.positive;
         stableNegative = sdInfo.negative;
     }
-
     // 默认先隐藏元数据
     metaDataOutput.innerText = metaDataText;
     metaDataOutput.style.display = "none";             
     toggleMetaDataButton.style.display = "block";
     toggleMetaDataButton.innerText = "显示完整元数据";  
-
     toggleMetaDataButton.onclick = () => {
         if (metaDataOutput.style.display === "none") {
             metaDataOutput.style.display = "block";
@@ -284,7 +222,6 @@ function parsePNGMetaData(dataUrl) {
             toggleMetaDataButton.innerText = "显示完整元数据";
         }
     };
-
     // 设置正、负向提示词
     let finalPositive = "";
     let finalNegative = "";
@@ -298,7 +235,6 @@ function parsePNGMetaData(dataUrl) {
         finalPositive = stablePositive;
         finalNegative = stableNegative;
     }
-
     if (finalPositive || finalNegative) {
         promptSectionTitle.style.display = "block";
         const positivePromptText = document.getElementById("positivePromptText");
@@ -309,14 +245,18 @@ function parsePNGMetaData(dataUrl) {
         negativePromptText.innerText = `负向提示词:\n${finalNegative}`;
     }
 }
-
 /*******************************************
 * 解析 Stable Diffusion 的纯文本信息
 *******************************************/
 function parseStableDiffusionData(text) {
     let positive = "";
     let negative = "";
-
+     // 寻找“parameters :”
+    const patternPos = /parameters :(.*?)(?=Negative prompt:|$)/is;
+    const matchPos = text.match(patternPos);
+    if (matchPos && matchPos[1]) {
+      positive = matchPos[1].trim();
+    }
     // 寻找“Negative prompt:”
     const patternNeg = /Negative prompt:\s*([^]*)/i;
     const matchNeg = text.match(patternNeg);
@@ -324,27 +264,20 @@ function parseStableDiffusionData(text) {
         const possibleNegative = matchNeg[1].split("Steps:")[0];
         negative = possibleNegative.trim();
     }
-
-    // 正向提示词取 “Negative prompt:” 之前的内容
-    let indexOfNegPrompt = text.toLowerCase().indexOf("negative prompt:");
-    if (indexOfNegPrompt > 0) {
-        positive = text.slice(0, indexOfNegPrompt).trim();
-    }
-
     return {
+        // 直接返回 cleanStablePrompt 的结果，不再进行 split 和 join
         positive: cleanStablePrompt(positive),
         negative: cleanStablePrompt(negative),
     };
 }
-
 /*******************************************
 * 对 Stable Diffusion 提示词做简单清洗
 *******************************************/
 function cleanStablePrompt(rawPrompt) {
     if (!rawPrompt) return "";
-    return rawPrompt.replace(/\s+$/, "");
+    // 将 BREAK 替换为 \n，合并多个连续换行符，并去除开头结尾的空行
+    return rawPrompt.trim().replace(/BREAK/g, "\n").replace(/\n+/g, '\n').trim();
 }
-
 /*******************************************
 * 复制到剪贴板
 *******************************************/
