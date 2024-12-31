@@ -38,7 +38,10 @@ window.onload = () => {
         const file = event.dataTransfer.files[0];
         handleFile(file);
     });
-    dropArea.addEventListener("click", function() {
+     // 修改：阻止 dropArea 的 click 事件冒泡
+    dropArea.addEventListener("click", function (event) {
+        event.preventDefault(); // 阻止默认行为
+        event.stopPropagation(); // 阻止事件冒泡
         imageUpload.click();
     });
     imageUpload.addEventListener("change", function(event) {
