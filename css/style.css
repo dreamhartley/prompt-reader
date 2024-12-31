@@ -1,188 +1,189 @@
 /* 全局默认样式 */
 body {
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
 }
 
 /* 顶部的标签切换容器 */
 .tab-container {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0;
-  width: 100%;
-  background-color: #f4f4f4;
-  padding: 10px 0;
-  box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 10px 0;
+    box-sizing: border-box;
 }
 
 /* 标签切换按钮 */
 .tab-button {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin: 0 5px;
-  transition: background-color 0.2s ease;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.2s ease;
 }
-
 .tab-button.active,
 .tab-button:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
 /* 标签内容区域 */
 .tab-content {
-  display: none; /* 初始隐藏 */
-  width: 100%;
-  align-items: center;
-  flex-direction: column;
-  max-width: 800px;
-  margin: 0 auto;
+    display: none; 
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
 }
-
 .tab-content.active {
-  display: flex; /* 显示激活的标签内容 */
+    display: flex;
 }
 
 h2 {
-  text-align: center;
-  margin: 20px 0 10px;
+    text-align: center;
+    margin: 20px 0 10px;
 }
 
-/* 让所有文本域/显示区域都能自动换行 */
+/* 换行处理 */
 textarea,
 #outputArea,
 #metaDataOutput,
 .prompt-text {
-  white-space: pre-wrap;
-  word-wrap: break-word; 
-  /* 也可加上 overflow-wrap: break-word; 以兼容更多浏览器 */
-  overflow-wrap: break-word;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* 转义字符转换的输入输出区 */
 textarea {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  width: 80%;
-  box-sizing: border-box;
-  resize: vertical; /* 仅允许垂直调整 */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 80%;
+    box-sizing: border-box;
+    resize: vertical; 
 }
-
 #outputArea {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  width: 80%;
-  box-sizing: border-box;
-  min-height: 100px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 80%;
+    box-sizing: border-box;
+    min-height: 100px;
 }
 
-/* 按钮的通用样式 */
+/* 通用按钮样式 */
 button {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin: 5px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
 }
-
 button:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
 /* 拖拽上传容器 */
 .upload-container {
-  margin: 10px;
-  padding: 10px;
-  border: 2px dashed #ccc;
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  cursor: pointer;
-  transition: border 0.2s ease;
-  box-sizing: border-box;
+    margin: 20px 0;
+    padding: 0;
+    border: 2px dashed #ccc;
+    width: 80%;
+    min-height: 200px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: border 0.2s ease;
+    box-sizing: border-box;
+    overflow: hidden;
 }
-
 .upload-container.dragover {
-  border-color: #4caf50;
+    border-color: #4caf50;
 }
 
+/* 上传占位符 */
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+.upload-placeholder span {
+    margin-top: 10px;
+    color: #666;
+}
+.upload-icon {
+    opacity: 0.5;
+}
+
+/* 图片预览 */
 #imagePreview {
-  max-width: 400px;
-  margin-bottom: 10px;
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    display: none;
 }
 
-/* 提示词区 */
+/* 提示词展示区 */
 .prompt-section {
-  width: 80%;
-  box-sizing: border-box;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
+    width: 80%;
+    box-sizing: border-box;
+    margin-top: 20px;
 }
-
-.prompt-section h3 {
-  text-align: left;
-  margin-top: 20px;
-  background-color: #f4f4f4;
-  padding: 10px;
-}
-
-/* 每个提示词盒子：相对定位，用以在右下角放置复制图标 */
 .prompt-box {
-  position: relative;
-  margin: 5px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-}
-
-/* 提示词文本，可正常选中，由上方全局选择器指定自动换行 */
-.prompt-text {
-  /* 已在全局里添加自动换行 */
+    position: relative;
+    margin: 10px 0;
+    padding: 15px;
+    padding-right: 50px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
 }
 
 /* 复制图标 */
 .copy-icon {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  cursor: pointer;
-  font-size: 1.2em;
-  opacity: 0.7;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    cursor: pointer;
+    opacity: 0.7;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
+.copy-icon img {
+    width: 20px;
+    height: 20px;
+}
 .copy-icon:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
-/* 元数据区 */
+/* 元数据展示区 */
 .meta-data-container {
-  width: 80%;
-  box-sizing: border-box;
-  margin-top: 10px;
+    width: 80%;
+    margin-top: 20px;
 }
-
-.meta-data-container button {
-  width: 100%;
-  text-align: center;
-}
-
 .meta-data-content {
-  display: none;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  /* 已在全局中设置自动换行 */
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
 }
