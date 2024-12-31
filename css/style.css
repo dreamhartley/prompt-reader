@@ -60,7 +60,7 @@ textarea,
 #metaDataOutput,
 .prompt-text {
   white-space: pre-wrap;
-  word-wrap: break-word; 
+  word-wrap: break-word;
   /* 也可加上 overflow-wrap: break-word; 以兼容更多浏览器 */
   overflow-wrap: break-word;
 }
@@ -146,6 +146,12 @@ button:hover {
   padding: 10px;
   border: 1px solid #ccc;
   background-color: #fff;
+}
+
+/* 提示词标签 */
+.prompt-label {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 /* 提示词文本，可正常选中，由上方全局选择器指定自动换行 */
