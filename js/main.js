@@ -308,8 +308,8 @@ function parsePNGMetaData(dataUrl) {
     positivePromptBox.style.display = "block";
     negativePromptBox.style.display = "block";
 
-    positivePromptText.innerText = `正向提示词:\n${finalPositive}`;
-    negativePromptText.innerText = `负向提示词:\n${finalNegative}`;
+    positivePromptText.innerText = `${finalPositive}`;
+    negativePromptText.innerText = `${finalNegative}`;
   }
 }
 
