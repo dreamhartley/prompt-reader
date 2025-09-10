@@ -279,8 +279,8 @@ function cleanStablePrompt(rawPrompt) {
     return rawPrompt.trim().replace(/BREAK/g, "\n").replace(/\n+/g, '\n').trim();
 }
 /*******************************************
-* 复制到剪贴板
-*******************************************/
+ * 复制到剪贴板
+ *******************************************/
 function copyToClipboard(text) {
     if (!text) return;
     const textarea = document.createElement("textarea");
@@ -289,5 +289,24 @@ function copyToClipboard(text) {
     textarea.select();
     document.execCommand("copy");
     document.body.removeChild(textarea);
-    alert("已复制到剪贴板");
+    showNotification("已复制到剪贴板", "success");
+}
+
+/*******************************************
+ * 显示通知横幅
+ *******************************************/
+function showNotification(message, type = "info") {
+    const notification = document.getElementById("copyNotification");
+    const notificationText = document.getElementById("notificationText");
+    
+    // 设置消息文本
+    notificationText.textContent = message;
+    
+    // 设置横幅类型样式
+    notification.className = "notification-banner show " + type;
+    
+    // 3秒后自动隐藏横幅
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, 3000);
 }

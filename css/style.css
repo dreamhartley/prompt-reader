@@ -231,3 +231,39 @@ button:hover {
         top: 0.5rem;
     }
 }
+
+/* 复制成功提醒横幅样式 */
+.notification-banner {
+    position: fixed;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transition: top 0.3s ease-in-out;
+    font-weight: 500;
+    font-size: 1rem;
+    min-width: 200px;
+    text-align: center;
+}
+
+.notification-banner.show {
+    top: 0;
+}
+
+.notification-banner.success {
+    background-color: #4CAF50;
+}
+
+.notification-banner.info {
+    background-color: var(--primary-color);
+}
+
+/* 横幅文字样式 */
+#notificationText {
+    display: block;
+}
